@@ -8,6 +8,7 @@ const API ='http://localhost:3000'
 
 export enum Action {
   syncKunden = 'syncKunden',
+  addKunde = 'addKunde',
 }
 
 type AugmentedActionContext = {
@@ -18,7 +19,8 @@ type AugmentedActionContext = {
 } & Omit<ActionContext<State, State>, 'commit'>
 
 export interface Actions {
-  [Action.syncKunden]({ state, commit }: AugmentedActionContext): void
+  [Action.syncKunden]({ state, commit }: AugmentedActionContext): void,
+  [Action.addKunde]({ state, commit ,dispatch }: AugmentedActionContext,payload :Kunde): void,
 }
 
 export const actions: ActionTree<State, State> & Actions = {
@@ -27,4 +29,16 @@ export const actions: ActionTree<State, State> & Actions = {
     const Kunden :Kunde[] = await res.json()
     commit(Mutation.refreshKunden,Kunden)
   },
+  async [Action.addKunde]({ state, commit,dispatch },payload) {
+    const newKunde = payload
+    const options = {
+      method: 'POST',
+      body: JSON.stringify(newKunde),
+      headers: {
+          'Content-Type': 'application/json'
+      }
+  }
+    const res = await fetch(`${API}/kunden`,options)
+    dispatch(Action.syncKunden)
+  },  
 }
