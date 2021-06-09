@@ -2,9 +2,12 @@ import { ActionTree, ActionContext } from 'vuex'
 
 import { State } from './state'
 import { Mutations, Mutation } from './mutations'
+import { Kunde } from '@/model/schema'
+const API ='http://localhost:3000'
+
 
 export enum Action {
-  initApp = 'initApp',
+  syncKunden = 'syncKunden',
 }
 
 type AugmentedActionContext = {
@@ -15,11 +18,13 @@ type AugmentedActionContext = {
 } & Omit<ActionContext<State, State>, 'commit'>
 
 export interface Actions {
-  [Action.initApp]({ state, commit, dispatch }: AugmentedActionContext): void
+  [Action.syncKunden]({ state, commit }: AugmentedActionContext): void
 }
 
 export const actions: ActionTree<State, State> & Actions = {
-  [Action.initApp]({ state, commit, dispatch }) {
-    console.log('app inited!')
+ async [Action.syncKunden]({ state, commit }) {
+    const res = await fetch(`${API}/kunden`)
+    const Kunden :Kunde[] = await res.json()
+    commit(Mutation.refreshKunden,Kunden)
   },
 }

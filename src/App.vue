@@ -1,7 +1,7 @@
 <template>
   <div class="justify-center flex-1">
     <div class="container pt-8 mx-auto">
-      <HelloWorld msg="Hello Vue 3 + Vite + Tailwind CSS" />
+      <HelloWorld msg="Hello and Welcome to our app" />
     </div>
   </div>
 </template>
