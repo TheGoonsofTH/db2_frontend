@@ -1,28 +1,11 @@
 <template>
-  <div class="px-8 prose w-full">
-    <table class="table-auto">
-      <thead>
-        <tr>
-          <th>id</th>
-          <th>Vorname</th>
-          <th>Nachname</th>
-          <th>Alter</th>
-          <th>Kontaktdaten_id</th>
-          <th @click="addKundefn" class="clickable">+</th>
-        </tr>
-      </thead>
-      <tbody>
-        <tr v-for="(kunde, index) in Kunden" :key="index">
-          <td>{{ kunde.id }}</td>
-          <td>{{ kunde.Vorname }}</td>
-          <td>{{ kunde.Nachname }}</td>
-          <td>{{ kunde.Alter }}</td>
-          <td>{{ kunde.Kontaktdaten_id }}</td>
-          <td><button @click="editKundefn(index)">edit</button></td>
-          <td><button @click="delKundefn(kunde.id)">del</button></td>
-        </tr>
-      </tbody>
-    </table>
+  <div class="mainTable">
+    <TableComp
+      v-if="Kunden[0]"
+      :update="Kunden"
+      @delete="delKundefn"
+      @edit="editKundefn"
+    ></TableComp>
   </div>
   <KundenForm v-if="showForm" @submitKunde="submitForm" @abort="showForm = !showForm"></KundenForm>
 </template>
@@ -31,10 +14,11 @@
 import { computed, defineProps, onMounted, reactive, ref } from 'vue'
 import { useStore, Mutation, Action } from '@/store/index'
 import KundenForm from '../components/KundenForm.vue'
+import TableComp from '../components/TableComp.vue'
 import { Kunde } from '@/model/schema'
 
 export default {
-  components: { KundenForm },
+  components: { KundenForm, TableComp },
   data(c) {
     return {
       showForm: false,
@@ -81,9 +65,10 @@ export default {
       this.formMode = ''
       this.showForm = false
     },
-      delKundefn(id:number){
-        this.store.dispatch(Action.deleteKunde,id)
-      },
+    delKundefn(id: number) {
+      this.store.dispatch(Action.deleteKunde, id)
+    },
   },
 }
 </script>
+

@@ -1,0 +1,85 @@
+<template>
+  <div class="px-8 prose"></div>
+  <form>
+    <div>
+      <p>Datum </p>
+      <input type="text" v-model="reservierung.Datumszeit" />
+      <p>Gelöscht</p>
+      <input type="text" v-model="reservierung.deleted" />
+      <p>Storniert</p>
+      <input type="text" v-model="reservierung.storniert" />
+      <p>Reservierer</p>
+      <input type="text" v-model="reservierung.reservierer_id" />
+    </div>
+  </form>
+  <div>
+    <button
+      @click="submit"
+      class="
+        focus:outline-none
+        text-sm
+        w-24
+        py-3
+        rounded-md
+        font-semibold
+        text-white
+        bg-blue-500
+        ring-0
+      "
+    >
+      OK
+    </button>
+
+    <button
+      @click="abort"
+      class="
+        focus:outline-none
+        text-sm
+        w-24
+        py-3
+        rounded-md
+        font-semibold
+        text-white
+        bg-red-500
+        ring-01
+      "
+    >
+      X
+    </button>
+  </div>
+</template>
+
+<script  lang="ts">
+import {  Reservierung } from '@/model/schema'
+import { computed, PropType, reactive } from 'vue'
+
+export default {
+  props: {
+    reservierung: {
+      type:Object as PropType<Reservierung>,
+      required:true
+      },
+  },
+  emits: ['submitForm', 'abort'],
+  setup(props, ctx) {
+    const submit = () => {
+      ctx.emit('submitForm', props.reservierung)
+    }
+    const abort = () => {
+      ctx.emit('abort')
+    }
+    return { submit,  abort }
+  },
+}
+</script>
+
+<style scoped>
+button {
+  margin: 1rem;
+}
+form{
+  display: flex;
+  flex-direction: row;
+  gap: 1em;
+}
+</style>

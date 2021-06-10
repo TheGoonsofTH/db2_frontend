@@ -7,3 +7,7 @@
 .clickable{
   cursor: pointer;
 }
+
+.mainTable{
+  width: 100%;
+}
