@@ -19,6 +19,7 @@
           <td>{{ kunde.Alter }}</td>
           <td>{{ kunde.Kontaktdaten_id }}</td>
           <td><button @click="editKundefn(index)">edit</button></td>
+          <td><button @click="delKundefn(kunde.id)">del</button></td>
         </tr>
       </tbody>
     </table>
@@ -80,6 +81,9 @@ export default {
       this.formMode = ''
       this.showForm = false
     },
+      delKundefn(id:number){
+        this.store.dispatch(Action.deleteKunde,id)
+      },
   },
 }
 </script>

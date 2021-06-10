@@ -51,6 +51,17 @@ interface Kunde {
   Kontaktdaten_id: number;
 }
 
+interface joinedKunde extends Kunde {
+  Kontaktdaten_id: number,
+  Adresse_id:number;
+  EMail:String;
+  Telefonnummer:number;
+  strasse: string;
+  Hausnummer: string;
+  stadt: string;
+  zipcode: string;
+}
+
 interface Kontaktdaten  {
   Adresse_id:number;
   'E-mail':String;
@@ -71,6 +82,7 @@ interface coronaInfo  {
 }
 
 export {
+  joinedKunde,
   Raum,
   Tischgruppe,
   Tisch,

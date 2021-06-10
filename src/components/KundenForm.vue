@@ -1,14 +1,30 @@
 <template>
   <div class="px-8 prose"></div>
   <form>
-    <p>Vorname</p>
-    <input type="text" v-model="kunde.Vorname" />
-    <p>Nachname</p>
-    <input type="text" v-model="kunde.Nachname" />
-    <p>Alter</p>
-    <input type="text" v-model="kunde.Alter" />
-    <p>kont</p>
-    <input type="text" v-model="kunde.Kontaktdaten_id" />
+    <div>
+      <p>Vorname</p>
+      <input type="text" v-model="kunde.Vorname" />
+      <p>Nachname</p>
+      <input type="text" v-model="kunde.Nachname" />
+      <p>Alter</p>
+      <input type="text" v-model="kunde.Alter" />
+      <p>kont</p>
+      <input type="text" v-model="kunde.Kontaktdaten_id" />
+    </div>
+    <div>
+      <p>E-Mail</p>
+      <input type="email" v-model="kunde.EMail" />
+      <p>Telefonnummer</p>
+      <input type="text" v-model="kunde.Telefonnummer" />
+      <p>strasse</p>
+      <input type="text" v-model="kunde.strasse" />
+      <p>Hausnummer</p>
+      <input type="text" v-model="kunde.Hausnummer" />
+      <p>stadt</p>
+      <input type="text" v-model="kunde.stadt" />
+      <p>zipcode</p>
+      <input type="text" v-model="kunde.zipcode" />
+    </div>
   </form>
   <div>
     <button
@@ -75,5 +91,10 @@ export default {
 <style scoped>
 button {
   margin: 1rem;
+}
+form{
+  display: flex;
+  flex-direction: row;
+  gap: 1em;
 }
 </style>
