@@ -1,10 +1,15 @@
 <template>
-  <TableForm v-if="reservierung" @edit="editReservierungfn" @delete="delReservierungfn" :update="reservierung"></TableForm>
+  <TableForm
+    v-if="reservierung"
+    @edit="editReservierungfn"
+    @delete="delReservierungfn"
+    :update="reservierung"
+  ></TableForm>
   <ReserierungsForm
     v-if="showForm"
     @submitForm="submitForm"
     :reservierung="editReservierung"
-    @abort="showForm = !showForm"
+    @abort="abortForm"
   ></ReserierungsForm>
 </template>
 
@@ -42,6 +47,10 @@ export default {
       }
       console.warn('wrong from mode')
       return
+    },
+    abortForm() {
+      this.showForm = false
+      this.store.dispatch(Action.syncReserverierungen)
     },
     addReservierungfn() {
       this.formMode = 'add'
