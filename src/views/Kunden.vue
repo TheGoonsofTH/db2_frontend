@@ -8,10 +8,11 @@
           <th>Nachname</th>
           <th>Alter</th>
           <th>Kontaktdaten_id</th>
+          <th @click="addKundefn" class="clickable">+</th>
         </tr>
       </thead>
       <tbody>
-        <tr v-for="(kunde,index) in Kunden" :key="index">
+        <tr v-for="(kunde, index) in Kunden" :key="index">
           <td>{{ kunde.id }}</td>
           <td>{{ kunde.Vorname }}</td>
           <td>{{ kunde.Nachname }}</td>
@@ -22,35 +23,63 @@
       </tbody>
     </table>
   </div>
-  <KundenForm v-if="showForm" :kunde="editKunde" :showForm="showForm"></KundenForm>
+  <KundenForm v-if="showForm" @submitKunde="submitForm" @abort="showForm = !showForm"></KundenForm>
 </template>
 
 <script  lang="ts">
-import { computed, defineProps, onMounted, reactive ,ref} from 'vue'
+import { computed, defineProps, onMounted, reactive, ref } from 'vue'
 import { useStore, Mutation, Action } from '@/store/index'
 import KundenForm from '../components/KundenForm.vue'
 import { Kunde } from '@/model/schema'
 
-export const showForm = ref(false)
-
 export default {
-  components:{KundenForm},
-  setup() {
+  components: { KundenForm },
+  data(c) {
+    return {
+      showForm: false,
+      formMode: 'add',
+    }
+  },
+  setup(prop) {
     const store = useStore()
-    const editKunde = reactive<Kunde>({})
     const storesyncKunden = () => store.dispatch(Action.syncKunden)
     onMounted(storesyncKunden)
-    const editKundefn = (index)=>{
-      let target = store.state.Kunden[index]
-      
-      editKunde.Nachname = target.Nachname
-      editKunde.Vorname = target.Vorname
-      editKunde.Alter = target.Alter
-      editKunde.Kontaktdaten_id = target.Kontaktdaten_id
-      showForm.value = true
-    }
     const Kunden = computed(() => store.state.Kunden)
-    return { Kunden ,showForm,editKunde,editKundefn }
+    return { Kunden, store }
+  },
+  methods: {
+    submitForm(payload: Kunde) {
+      if (this.formMode === 'add') {
+        this.addKunde(payload)
+      }
+      if (this.formMode === 'edit') {
+        this.updateKunde(payload)
+      }
+      console.warn('wrong from mode')
+      return
+    },
+    addKundefn() {
+      let target: Kunde = { Nachname: '', Vorname: '', Alter: 0, Kontaktdaten_id: 0 }
+      this.store.state.editKunde = target
+      this.formMode = 'add'
+      this.showForm = true
+    },
+    editKundefn(index: number) {
+      let target = this.store.state.Kunden[index]
+      this.store.state.editKunde = target
+      this.formMode = 'edit'
+      this.showForm = true
+    },
+    updateKunde(kunde: Kunde) {
+      this.store.dispatch(Action.updateKunde, kunde)
+      this.formMode = ''
+      this.showForm = false
+    },
+    addKunde(kunde: Kunde) {
+      this.store.dispatch(Action.addKunde, kunde)
+      this.formMode = ''
+      this.showForm = false
+    },
   },
 }
 </script>

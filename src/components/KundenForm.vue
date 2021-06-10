@@ -8,31 +8,72 @@
     <p>Alter</p>
     <input type="text" v-model="kunde.Alter" />
     <p>kont</p>
-    <input type="text" v-model="kunde.Kontaktdaten_id" />    
+    <input type="text" v-model="kunde.Kontaktdaten_id" />
   </form>
-  <button @click="submitKunde">OK</button>
+  <div>
+    <button
+      @click="submitKunde"
+      class="
+        focus:outline-none
+        text-sm
+        w-24
+        py-3
+        rounded-md
+        font-semibold
+        text-white
+        bg-blue-500
+        ring-0
+      "
+    >
+      OK
+    </button>
+
+    <button
+      @click="abort"
+      class="
+        focus:outline-none
+        text-sm
+        w-24
+        py-3
+        rounded-md
+        font-semibold
+        text-white
+        bg-red-500
+        ring-01
+      "
+    >
+      X
+    </button>
+  </div>
 </template>
 
 <script  lang="ts">
 import { Kunde } from '@/model/schema'
-import { PropType } from 'vue'
-import { useStore,  Action } from '@/store/index'
+import { computed, PropType, reactive } from 'vue'
+import { useStore, Action } from '@/store/index'
 
 export default {
   props: {
-    kunde: {
-      type: Object as PropType<Kunde>,
-      required: true,
-    },
-    showForm: Boolean
+    update: Boolean,
   },
-  setup(props){
+  emits: ['submitKunde', 'abort'],
+  setup(props, ctx) {
+    const kunde = computed(() => store.state.editKunde)
+
     const store = useStore()
-    const submitKunde = ()=>{
-      store.dispatch(Action.addKunde,props.kunde)
-      props.showForm = false
+    const submitKunde = () => {
+      ctx.emit('submitKunde', kunde.value)
     }
-    return {submitKunde}
-  }
+    const abort = () => {
+      ctx.emit('abort')
+    }
+    return { submitKunde, kunde, abort }
+  },
 }
 </script>
+
+<style scoped>
+button {
+  margin: 1rem;
+}
+</style>

@@ -44,9 +44,10 @@ interface Reservierer  {
 }
 
 interface Kunde {
-  nachname: string;
-  vorname:string;
-  alter: number;
+  id?:number
+  Nachname: string;
+  Vorname:string;
+  Alter: number;
   Kontaktdaten_id: number;
 }
 

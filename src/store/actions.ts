@@ -9,6 +9,7 @@ const API ='http://localhost:3000'
 export enum Action {
   syncKunden = 'syncKunden',
   addKunde = 'addKunde',
+  updateKunde = 'updateKunde',
 }
 
 type AugmentedActionContext = {
@@ -21,6 +22,7 @@ type AugmentedActionContext = {
 export interface Actions {
   [Action.syncKunden]({ state, commit }: AugmentedActionContext): void,
   [Action.addKunde]({ state, commit ,dispatch }: AugmentedActionContext,payload :Kunde): void,
+  [Action.updateKunde]({ state, commit ,dispatch }: AugmentedActionContext,payload :Kunde): void,
 }
 
 export const actions: ActionTree<State, State> & Actions = {
@@ -41,4 +43,16 @@ export const actions: ActionTree<State, State> & Actions = {
     const res = await fetch(`${API}/kunden`,options)
     dispatch(Action.syncKunden)
   },  
+  async [Action.updateKunde]({ state, commit,dispatch },payload) {
+    const newKunde = payload
+    const options = {
+      method: 'PATCH',
+      body: JSON.stringify(newKunde),
+      headers: {
+          'Content-Type': 'application/json'
+      }
+  }
+    const res = await fetch(`${API}/kunden`,options)
+    dispatch(Action.syncKunden)
+  },   
 }
