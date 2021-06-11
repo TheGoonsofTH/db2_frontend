@@ -4,6 +4,7 @@
       <thead>
         <tr>
           <th v-for="(key, index) in Headers" :key="index">{{ key }}</th>
+          <th @click="addfn" class="clickable">+</th>
         </tr>
       </thead>
       <tbody>
@@ -28,12 +29,13 @@ export default {
       type: Array as PropType<Array<dbObj>>,
     },
   },
-  emits: ['edit', 'delete'],
+  emits: ['edit', 'delete','add'],
   setup(props,ctx) {
     const Headers = Object.keys(props.update[0])
     const editfn= (index:number)=> ctx.emit('edit',index)
     const delfn= (id:number)=> ctx.emit('delete',id)
-    return { Headers ,editfn,delfn}
+    const addfn= ()=> ctx.emit('add')
+    return { Headers ,editfn,delfn,addfn}
   },
 }
 </script>

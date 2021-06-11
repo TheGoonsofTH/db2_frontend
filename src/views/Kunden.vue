@@ -5,6 +5,7 @@
       :update="Kunden"
       @delete="delKundefn"
       @edit="editKundefn"
+      @add="addKundefn"
     ></TableComp>
   </div>
   <KundenForm v-if="showForm" @submitKunde="submitForm" @abort="showForm = !showForm"></KundenForm>
@@ -44,8 +45,6 @@ export default {
       return
     },
     addKundefn() {
-      let target: Kunde = { Nachname: '', Vorname: '', Alter: 0, Kontaktdaten_id: 0 }
-      this.store.state.editKunde = target
       this.formMode = 'add'
       this.showForm = true
     },

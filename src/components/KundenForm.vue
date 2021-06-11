@@ -8,8 +8,6 @@
       <input type="text" v-model="kunde.Nachname" />
       <p>Alter</p>
       <input type="text" v-model="kunde.Alter" />
-      <p>kont</p>
-      <input type="text" v-model="kunde.Kontaktdaten_id" />
     </div>
     <div>
       <p>E-Mail</p>
