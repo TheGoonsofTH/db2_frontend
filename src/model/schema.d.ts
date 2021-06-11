@@ -52,6 +52,7 @@ interface Kunde {
 }
 
 interface joinedKunde extends Kunde {
+  Alter: number;
   Kontaktdaten_id: number,
   Adresse_id:number;
   EMail:String;
@@ -63,12 +64,14 @@ interface joinedKunde extends Kunde {
 }
 
 interface Kontaktdaten  {
+  id?:number
   Adresse_id:number;
   'E-mail':String;
   Telefonnummer:number;
 }
 
 interface Adresse  {
+  id?:number
   strasse: string;
   Hausnummer: string;
   stadt: string;
