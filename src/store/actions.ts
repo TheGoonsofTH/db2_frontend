@@ -12,6 +12,7 @@ export enum Action {
   updateKunde = 'updateKunde',
   deleteKunde = 'deleteKunde',
   syncReserverierungen = 'syncReserverierungen',
+  updateReservierung = 'updateReservierung'
 }
 
 type AugmentedActionContext = {
@@ -26,6 +27,7 @@ export interface Actions {
   [Action.syncReserverierungen]({ state, commit }: AugmentedActionContext): void
   [Action.addKunde]({ state, commit, dispatch }: AugmentedActionContext, payload: Kunde): void
   [Action.updateKunde]({ state, commit, dispatch }: AugmentedActionContext, payload: Kunde): void
+  [Action.updateReservierung]({ state, commit, dispatch }: AugmentedActionContext, payload: Reservierung): void
   [Action.deleteKunde]({ state, commit, dispatch }: AugmentedActionContext, id: number): void
 }
 
@@ -75,6 +77,18 @@ export const actions: ActionTree<State, State> & Actions = {
     }
     const res = await fetch(`${API}/kunden`, options)
     dispatch(Action.syncKunden)
+  },
+  async [Action.updateReservierung]({ state, commit, dispatch }, payload) {
+    const newItem = payload
+    const options = {
+      method: 'PATCH',
+      body: JSON.stringify(newItem),
+      headers: {
+        'Content-Type': 'application/json',
+      },
+    }
+    const res = await fetch(`${API}/kunden`, options)
+    dispatch(Action.syncReserverierungen)
   },
   async [Action.deleteKunde]({ state, commit, dispatch }, id) {
     const options = {

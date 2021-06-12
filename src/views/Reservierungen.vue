@@ -1,6 +1,6 @@
 <template>
   <TableForm
-    v-if="reservierung"
+    v-if="reservierung.length > 0"
     @edit="editReservierungfn"
     @delete="delReservierungfn"
     :update="reservierung"

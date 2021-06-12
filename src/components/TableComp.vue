@@ -27,6 +27,7 @@ export default {
   props: {
     update: {
       type: Array as PropType<Array<dbObj>>,
+      required: true
     },
   },
   emits: ['edit', 'delete','add'],

@@ -3385,6 +3385,11 @@ slice-ansi@^4.0.0:
     astral-regex "^2.0.0"
     is-fullwidth-code-point "^3.0.0"
 
+snackbar@^1.1.0:
+  version "1.1.0"
+  resolved "https://registry.yarnpkg.com/snackbar/-/snackbar-1.1.0.tgz#08615013ec16a8220e6218284938a3b15a01a6b0"
+  integrity sha512-gU03hDQqfIZEcfcUZtMwmVTjy0g3FSNhWlO2L7z78JK6rS487GPPQ8wfprD0fY9DBfUjHPqjfj2CT6lvdD7Lkg==
+
 source-map-js@^0.6.2:
   version "0.6.2"
   resolved "https://registry.npmjs.org/source-map-js/-/source-map-js-0.6.2.tgz"

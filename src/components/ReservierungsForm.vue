@@ -5,9 +5,9 @@
       <p>Datum </p>
       <input type="text" v-model="reservierung.Datumszeit" />
       <p>Gelöscht</p>
-      <input type="text" v-model="reservierung.deleted" />
+      <input type="checkbox" v-model="reservierung.deleted" />
       <p>Storniert</p>
-      <input type="text" v-model="reservierung.storniert" />
+      <input type="checkbox" v-model="reservierung.storniert" />
       <p>Reservierer</p>
       <input type="text" v-model="reservierung.reservierer_id" />
     </div>
