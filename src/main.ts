@@ -9,10 +9,8 @@ const app = createApp(App).use(router)
 
 app.mixin({
   methods: {
-    showSnackbar(msg:string){
-      console.log(msg);
-      
-      snackbar.show("msg")
+    showSnackbar(msg:string){      
+      snackbar.show(msg)
     }
   }
 })

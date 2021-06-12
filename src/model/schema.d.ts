@@ -79,6 +79,7 @@ interface Adresse  {
 }
 
 interface coronaInfo  {
+  id?:number;
   momentane_Inzidenz: number;
   maxAnzahlPersonnen_pro_qm: number;
   Datum: string;
