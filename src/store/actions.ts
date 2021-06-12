@@ -12,7 +12,8 @@ export enum Action {
   updateKunde = 'updateKunde',
   deleteKunde = 'deleteKunde',
   syncReserverierungen = 'syncReserverierungen',
-  updateReservierung = 'updateReservierung'
+  updateReservierung = 'updateReservierung',
+  addReservierung = 'addReservierung',
 }
 
 type AugmentedActionContext = {
@@ -26,6 +27,7 @@ export interface Actions {
   [Action.syncKunden]({ state, commit }: AugmentedActionContext): void
   [Action.syncReserverierungen]({ state, commit }: AugmentedActionContext): void
   [Action.addKunde]({ state, commit, dispatch }: AugmentedActionContext, payload: Kunde): void
+  [Action.addReservierung]({ state, commit, dispatch }: AugmentedActionContext, payload: Reservierung): void
   [Action.updateKunde]({ state, commit, dispatch }: AugmentedActionContext, payload: Kunde): void
   [Action.updateReservierung]({ state, commit, dispatch }: AugmentedActionContext, payload: Reservierung): void
   [Action.deleteKunde]({ state, commit, dispatch }: AugmentedActionContext, id: number): void
@@ -66,6 +68,18 @@ export const actions: ActionTree<State, State> & Actions = {
     const res = await fetch(`${API}/kunden`, options)
     dispatch(Action.syncKunden)
   },
+  async [Action.addReservierung]({ state, commit, dispatch }, payload) {
+    const newitem : Reservierung = payload
+    const options = {
+      method: 'POST',
+      body: JSON.stringify(newitem),
+      headers: {
+        'Content-Type': 'application/json',
+      },
+    }
+    const res = await fetch(`${API}/reservierungen`, options)
+    dispatch(Action.syncReserverierungen)
+  },
   async [Action.updateKunde]({ state, commit, dispatch }, payload) {
     const newKunde = payload
     const options = {
@@ -87,7 +101,7 @@ export const actions: ActionTree<State, State> & Actions = {
         'Content-Type': 'application/json',
       },
     }
-    const res = await fetch(`${API}/kunden`, options)
+    const res = await fetch(`${API}/reservierungen`, options)
     dispatch(Action.syncReserverierungen)
   },
   async [Action.deleteKunde]({ state, commit, dispatch }, id) {

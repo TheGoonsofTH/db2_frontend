@@ -3,6 +3,7 @@
     v-if="reservierung.length > 0"
     @edit="editReservierungfn"
     @delete="delReservierungfn"
+    @add="addReservierungfn"
     :update="reservierung"
   ></TableForm>
   <ReserierungsForm

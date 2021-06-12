@@ -2,14 +2,23 @@
   <div class="px-8 prose"></div>
   <form>
     <div>
-      <p>Datum </p>
-      <input type="text" v-model="reservierung.Datumszeit" />
+      <p>Datum</p>
+      <input type="date" v-model="reservierung.Datumszeit" />
       <p>Gelöscht</p>
       <input type="checkbox" v-model="reservierung.deleted" />
       <p>Storniert</p>
       <input type="checkbox" v-model="reservierung.storniert" />
       <p>Reservierer</p>
       <input type="text" v-model="reservierung.reservierer_id" />
+    </div>
+    <div>
+      <p>wähle Reservierer</p>
+      <select v-model="reservierung.reservierer_id" name="kunden"  id="Kunden-select">
+        <option value="">--Reservierer--</option>
+        <option v-for="(kunde, index) in Kunden" :key="index" :value="kunde.id">
+          {{ kunde.Vorname }} {{kunde.Nachname}}
+        </option>
+      </select>
     </div>
   </form>
   <div>
@@ -50,15 +59,16 @@
 </template>
 
 <script  lang="ts">
-import {  Reservierung } from '@/model/schema'
-import { computed, PropType, reactive } from 'vue'
+import { Reservierung } from '@/model/schema'
+import { computed, onMounted, PropType, reactive, ref } from 'vue'
+import { useStore, Mutation, Action } from '@/store/index'
 
 export default {
   props: {
     reservierung: {
-      type:Object as PropType<Reservierung>,
-      required:true
-      },
+      type: Object as PropType<Reservierung>,
+      required: true,
+    },
   },
   emits: ['submitForm', 'abort'],
   setup(props, ctx) {
@@ -68,7 +78,12 @@ export default {
     const abort = () => {
       ctx.emit('abort')
     }
-    return { submit,  abort }
+    const store = useStore()
+    const storesyncKunden = () => store.dispatch(Action.syncKunden)
+    onMounted(storesyncKunden)
+    const Kunden = computed(() => store.state.Kunden)
+    const selectedKunde = ref(0)
+    return { submit, abort,Kunden ,selectedKunde}
   },
 }
 </script>
@@ -77,7 +92,7 @@ export default {
 button {
   margin: 1rem;
 }
-form{
+form {
   display: flex;
   flex-direction: row;
   gap: 1em;
