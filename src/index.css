@@ -1,4 +1,4 @@
-@import '../node_modules/snackbar/src/snackbar.scss';
+@import '../src/assets/main.css';
 @tailwind base;
 
 @tailwind components;

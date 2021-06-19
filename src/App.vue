@@ -12,6 +12,7 @@
 <script>
 /* eslint-disable @typescript-eslint/explicit-module-boundary-types */
 import { routes } from "./router/routes";
+
 export default {
   setup(){
     const currentRoutes = routes

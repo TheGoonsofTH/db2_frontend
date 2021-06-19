@@ -4,7 +4,9 @@ import { ActionTree, ActionContext } from 'vuex'
 import { State } from './state'
 import { Mutations, Mutation } from './mutations'
 import { Adresse, joinedKunde, Kunde, Reservierung } from '@/model/schema'
-import snackbar from "snackbar";
+
+
+import snackbar from "../lib/snackbar";
 
 const API = 'http://localhost:3000'
 
