@@ -4,6 +4,8 @@ import { ActionTree, ActionContext } from 'vuex'
 import { State } from './state'
 import { Mutations, Mutation } from './mutations'
 import { Adresse, joinedKunde, Kunde, Reservierung } from '@/model/schema'
+import snackbar from "snackbar";
+
 const API = 'http://localhost:3000'
 
 export enum Action {
@@ -14,6 +16,10 @@ export enum Action {
   syncReserverierungen = 'syncReserverierungen',
   updateReservierung = 'updateReservierung',
   addReservierung = 'addReservierung',
+}
+
+function showSnackbar(msg:string){      
+  snackbar.show(msg)
 }
 
 type AugmentedActionContext = {
@@ -36,25 +42,35 @@ export interface Actions {
 export const actions: ActionTree<State, State> & Actions = {
   async [Action.syncKunden]({ state, commit }) {
     const res = await fetch(`${API}/kunden`)
-    const Kunden: joinedKunde[] = await res.json()
-    let adresse: Adresse[] = []
-    Kunden.forEach((k) => {
-      let adr: Adresse = {
-        strasse: k.strasse,
-        Hausnummer: k.Hausnummer,
-        stadt: k.stadt,
-        zipcode: k.zipcode,
-        id:k.Adresse_id
-      }
-      adresse.push(adr)
-    })
-    commit(Mutation.refreshAdressen,adresse)
-    commit(Mutation.refreshKunden, Kunden)
+    if (res.status !== 200) {
+      const msg = await res.json()
+      showSnackbar(msg.message)          
+    }else{
+      const Kunden: joinedKunde[] = await res.json()
+      let adresse: Adresse[] = []
+      Kunden.forEach((k) => {
+        let adr: Adresse = {
+          strasse: k.strasse,
+          Hausnummer: k.Hausnummer,
+          stadt: k.stadt,
+          zipcode: k.zipcode,
+          id:k.Adresse_id
+        }
+        adresse.push(adr)
+      })
+      commit(Mutation.refreshAdressen,adresse)
+      commit(Mutation.refreshKunden, Kunden)
+    } 
   },
   async [Action.syncReserverierungen]({ state, commit }) {
     const res = await fetch(`${API}/reservierungen`)
-    const Reservierung: Reservierung[] = await res.json()
-    commit(Mutation.refreshReservierungen, Reservierung)
+    if (res.status !== 200) {
+      const msg = await res.json()
+      showSnackbar(msg.message)          
+    }else{
+      const Reservierung: Reservierung[] = await res.json()
+      commit(Mutation.refreshReservierungen, Reservierung)
+    }    
   },
   async [Action.addKunde]({ state, commit, dispatch }, payload) {
     const newKunde = payload
@@ -66,7 +82,12 @@ export const actions: ActionTree<State, State> & Actions = {
       },
     }
     const res = await fetch(`${API}/kunden`, options)
-    dispatch(Action.syncKunden)
+    if (res.status !== 200) {
+      const msg = await res.json()
+      showSnackbar(msg.message)          
+    }else{
+      dispatch(Action.syncKunden)
+    }
   },
   async [Action.addReservierung]({ state, commit, dispatch }, payload) {
     const newitem : Reservierung = payload
@@ -78,7 +99,12 @@ export const actions: ActionTree<State, State> & Actions = {
       },
     }
     const res = await fetch(`${API}/reservierungen`, options)
-    dispatch(Action.syncReserverierungen)
+    if (res.status !== 200) {
+      const msg = await res.json()
+      showSnackbar(msg.message)          
+    }else{
+      dispatch(Action.syncReserverierungen)
+    }
   },
   async [Action.updateKunde]({ state, commit, dispatch }, payload) {
     const newKunde = payload
@@ -90,7 +116,12 @@ export const actions: ActionTree<State, State> & Actions = {
       },
     }
     const res = await fetch(`${API}/kunden`, options)
-    dispatch(Action.syncKunden)
+    if (res.status !== 200) {
+      const msg = await res.json()
+      showSnackbar(msg.message)          
+    }else{
+      dispatch(Action.syncKunden)
+    }
   },
   async [Action.updateReservierung]({ state, commit, dispatch }, payload) {
     const newItem = payload
@@ -102,7 +133,12 @@ export const actions: ActionTree<State, State> & Actions = {
       },
     }
     const res = await fetch(`${API}/reservierungen`, options)
-    dispatch(Action.syncReserverierungen)
+    if (res.status !== 200) {
+      const msg = await res.json()
+      showSnackbar(msg.message)          
+    }else{
+      dispatch(Action.syncReserverierungen)
+    }
   },
   async [Action.deleteKunde]({ state, commit, dispatch }, id) {
     const options = {
@@ -113,6 +149,11 @@ export const actions: ActionTree<State, State> & Actions = {
       },
     }
     const res = await fetch(`${API}/kunden/${id}`, options)
-    dispatch(Action.syncKunden)
+    if (res.status !== 200) {
+      const msg = await res.json()
+      showSnackbar(msg.message)          
+    }else{
+      dispatch(Action.syncKunden)
+    }
   },
 }

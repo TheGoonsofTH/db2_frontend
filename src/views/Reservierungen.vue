@@ -46,7 +46,7 @@ export default {
       if (this.formMode === 'edit') {
         this.updateReservierung(payload)
       }
-      console.warn('wrong from mode')
+      console.warn('wrong form mode')
       return
     },
     abortForm() {

@@ -1,5 +1,5 @@
 <template>
-  <nav m-1>
+  <nav m-1 >
         <router-link v-for="route in currentRoutes" :key="route.path" :to="route.path">
           {{ route.name }}
         </router-link>
@@ -26,6 +26,7 @@ export default {
   flex-direction: column;
 }
 nav{
+  border: 5px grey;
   padding-block-end: 1em;
   display: flex;
   height: 3rem;

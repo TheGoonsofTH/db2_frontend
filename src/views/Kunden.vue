@@ -46,6 +46,7 @@ export default {
     },
     addKundefn() {
       this.formMode = 'add'
+      this.store.state.editKunde = {}      
       this.showForm = true
     },
     editKundefn(index: number) {
