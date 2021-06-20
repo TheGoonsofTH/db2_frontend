@@ -1,5 +1,5 @@
 <template>
-  <div class="px-8 prose w-full">
+  <div class="px-8 prose w-full mb-4">
     <table class="table-auto">
       <thead>
         <tr>

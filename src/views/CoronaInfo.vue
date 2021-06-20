@@ -72,7 +72,7 @@ export default {
       this.showForm = false
     },
     async addcoronainfo(coronainfo: coronaInfo) {
-      let date =  new Date(coronainfo.Datum)
+      let date = new Date(coronainfo.Datum)
       const options = {
         method: 'POST',
         body: JSON.stringify(coronainfo),
@@ -80,13 +80,21 @@ export default {
           'Content-Type': 'application/json',
         },
       }
-        const res = await fetch(`${this.API}/coronainfo`, options)
-        if (res.status !== 200) {
-          const msg = await res.json()
+      const res = await fetch(`${this.API}/coronainfo`, options)
+      if (res.status !== 200) {
+        const msg = await res.json()
+        this.showSnackbar(msg.message)
           this.showSnackbar(msg.message)          
-        } else {
+        this.showSnackbar(msg.message)
+          this.showSnackbar(msg.message)          
+        this.showSnackbar(msg.message)
+      } else {
+        //this.showSnackbar("coronainfo hinzugefügt")
           //this.showSnackbar("coronainfo hinzugefügt")          
-        }
+        //this.showSnackbar("coronainfo hinzugefügt")
+          //this.showSnackbar("coronainfo hinzugefügt")          
+        //this.showSnackbar("coronainfo hinzugefügt")
+      }
       this.formMode = ''
       this.showForm = false
     },
@@ -98,4 +106,6 @@ export default {
     },
   },
 }
+
 </script>
+
